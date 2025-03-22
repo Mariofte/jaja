@@ -1,0 +1,15 @@
+[server]
+port = 8501
+runOnSave = true
+
+[theme]
+base = "dark"
+textColor = "white"
+primaryColor = "#0000FF"
+secondaryBackgroundColor =" #A020F0!"
+backgroundColor = "black"
+
+[browser]
+serverAddress = "localhost"
+gatherUsageStats = true
+serverPort = 8501
