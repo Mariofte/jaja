@@ -1,13 +1,13 @@
-import streamlit as st 
 import yaml
 import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
 from streamlit_authenticator.utilities import *
 from pathlib import Path
+from streamlit import *
 
 class user:
     def __init__(self):
-        self.file_path = Path(__file__).parent / 'config.yaml'
+        self.file_path = Path(__file__).parent / 'lib\service\Logs\config.yaml'
         
     def log_in(self):
         try:
@@ -25,7 +25,7 @@ class user:
                 api_key = config['api_key']
             )
             
-            with st.expander("Log in"):
+            with expander("Log in"):
                 authenticator.login(key='Login', location='main', captcha=False)
             
             with self.file_path.open('w', encoding='utf-8') as file:
@@ -33,14 +33,14 @@ class user:
             
         
         except Exception as e:
-            with st.expander("Error"):
-                st.error(f"Hubo un error desconocido : {e}")
-                st.info("Informar a Mario")
+            with expander("Error"):
+                error(f"Hubo un error desconocido : {e}")
+                info("Informar a Mario")
 
         except LoginError as le:
-            with st.expander("Error"):
-                st.error(f"Hubo un error al intentar iniciar sesión : {le}")
-                st.info("Informar a Mario")
+            with expander("Error"):
+                error(f"Hubo un error al intentar iniciar sesión : {le}")
+                info("Informar a Mario")
             
     def log_out(self):
         try:
@@ -62,14 +62,14 @@ class user:
                 config = yaml.dump(config, file, default_flow_style = False, allow_unicode=True)
             
         except Exception as e:
-            with st.expander("Error"):
-                st.error(f"Hubo un error desconocido : {e}")
-                st.info("Informar a Mario")
+            with expander("Error"):
+                error(f"Hubo un error desconocido : {e}")
+                info("Informar a Mario")
 
         except LogoutError as le:
-            with st.expander("Error"):
-                st.error(f"Hubo un error al intentar salir de la sesión : {le}")
-                st.info("Informar a Mario")
+            with expander("Error"):
+                error(f"Hubo un error al intentar salir de la sesión : {le}")
+                info("Informar a Mario")
             
     def creat_user(self):
         try:
@@ -87,15 +87,16 @@ class user:
                 api_key = config['api_key']
             )
             
-            with st.expander("Crear usuario"):
+            with expander("Crear usuario"):
                 authenticator.register_user(location="main", captcha=False)
+                
+            with self.file_path.open('w', encoding='utf-8') as file:
+                config = yaml.dump(config, file, default_flow_style = False, allow_unicode=True)
+            
         
         except Exception as e:
-            with st.expander("Error"):
-                st.error(f"Hubo un error desconocido : {e}")
-                st.info("Informar a Mario")
-
-        except LoginError as le:
-            with st.expander("Error"):
-                st.error(f"Hubo un error al intentar iniciar sesión : {le}")
-                st.info("Informar a Mario")
+            with expander("Error"):
+                error(f"Hubo un error desconocido : {e}")
+                info("Informar a Mario")
+                
+    
